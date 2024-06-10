@@ -1,35 +1,42 @@
-#include <vector>
-#include <numeric>
-
-using namespace std;
-
 class Solution {
-private:
-    bool isSubsetSum(vector<int>& arr, int sum) {
-        int n = arr.size();
-        vector<vector<bool>> dp(n, vector<bool>(sum + 1, false));
-        
-        for (int i = 0; i < n; i++) dp[i][0] = true;
-        
-        if (arr[0] <= sum) dp[0][arr[0]] = true;
-        
-        for (int i = 1; i < n; i++) {
-            for (int target = 1; target <= sum; target++) {
-                bool exclude = dp[i - 1][target];
-                bool include = false;
-                if (target >= arr[i]) include = dp[i - 1][target - arr[i]];
-                
-                dp[i][target] = include || exclude;
-            }
-        }
-        
-        return dp[n - 1][sum];
-    }
-
 public:
+    int solve(int i , vector<int> &arr , int sum , vector<vector<int>> &dp){
+        
+        if(sum==0) return 1;
+
+        if(i==0 && sum != arr[0]) return 0;
+        
+        if(sum<0 || i<0 ) return 0;
+        
+        if(dp[i][sum] != -1) return dp[i][sum];
+        
+        // int take = solve(i-1,arr,sum-arr[i] , dp);
+        
+        // int nottake = solve(i-1,arr,sum, dp);
+        
+        int ans = solve(i-1,arr,sum-arr[i] , dp) || solve(i-1,arr,sum, dp)  ;
+        
+        // dp[i][sum] = ans;
+        
+        
+        return dp[i][sum] = ans;
+    }
     bool canPartition(vector<int>& nums) {
-        int sum = accumulate(nums.begin(), nums.end(), 0);
-        if (sum % 2 != 0 || nums.size() == 1) return false;
-        return isSubsetSum(nums, sum / 2);
+        int n = nums.size();
+        int sum = 0;
+        for(int i=0;i<n;i++){
+            sum = sum + nums[i];
+        }
+
+        if(sum%2==1) return 0;
+
+        sum = sum /2;
+
+        vector<vector<int>> dp(n+1,vector<int>(sum+1,-1));
+
+        int ans = solve(n-1,nums,sum ,dp);
+
+        return ans;
+
     }
 };
