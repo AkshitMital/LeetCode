@@ -8,7 +8,6 @@ public:
             maxi = max(maxi, difficulty[i]);
         }
         vector<int> arr(maxi+1, 0);
-        if(mpp.find(0) != mpp.end()) arr[0] = mpp[0];
         for(int i = 1; i <= maxi; i++){
             arr[i] = max(arr[i - 1], mpp[i]);
         }
