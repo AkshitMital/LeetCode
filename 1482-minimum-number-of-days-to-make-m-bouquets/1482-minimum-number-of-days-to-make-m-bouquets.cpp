@@ -1,9 +1,9 @@
 class Solution {
 private:
-    bool solve(int ind, vector<int>& bloomDay, int m, int k){
-        int bouquets = 0;
-        int consec = 0;
-        for(int i = 0; i < bloomDay.size(); i++){
+    bool solve(long long ind, vector<int>& bloomDay, int m, int k){
+        long long bouquets = 0;
+        long long consec = 0;
+        for(long long i = 0; i < bloomDay.size(); i++){
             if(bloomDay[i] <= ind) consec++;
             else consec = 0;
 
@@ -20,12 +20,12 @@ public:
 
         if(m > bloomDay.size() / k )return -1;
 
-        int start = 0;
-        int end = *max_element(bloomDay.begin(), bloomDay.end());
-        int ans = -1;
+        long long start = 0;
+        long long end = *max_element(bloomDay.begin(), bloomDay.end());
+        long long ans = -1;
 
         while(start <= end){
-            int mid = start + (end-start)/2;
+            long long mid = start + (end-start)/2;
             if(solve(mid, bloomDay, m, k)){
                 ans = mid;
                 end = mid-1;
