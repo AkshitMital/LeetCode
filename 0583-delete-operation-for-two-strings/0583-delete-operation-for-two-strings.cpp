@@ -11,14 +11,16 @@ public:
             }
             prev = curr;
         }
-        
+
         int len = prev[m];
         int ans = 0;
 
-        if(len == n) ans = (m-len);
-        else if(len == m) ans = (n-len);
-        else ans = (n+m) - 2*len;
+        // if(len == n) ans = (m-len);
+        // else if(len == m) ans = (n-len);
+        // else ans = (n+m) - 2*len;
 
-        return ans;
+        // return ans;
+
+        return ((n+m) - 2*len);
     }
 };
