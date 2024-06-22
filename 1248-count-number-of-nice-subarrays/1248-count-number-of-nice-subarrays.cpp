@@ -5,17 +5,17 @@ public:
         int l = 0, m = 0, odd = 0, ans = 0;
 
         for(int r = 0; r < n; r++){
-            if(nums[r] % 2) odd++;
+            if(nums[r] % 2 == 1) odd++;
 
             while(odd > k){
-                if(nums[l] % 2) odd--;
+                if(nums[l] % 2 == 1) odd--;
                 l++;
                 m = l;
             }
 
             if(odd == k){
-                while(nums[m]%2 == 0) m++;
-                ans += (m-l+1);
+                while(m <= r && nums[m] % 2 == 0) m++;
+                ans += (m - l + 1);
             }
         }
 
