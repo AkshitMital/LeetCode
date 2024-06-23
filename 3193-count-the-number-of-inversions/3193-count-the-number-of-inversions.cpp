@@ -1,7 +1,7 @@
 class Solution {
 public:
     int numberOfPermutations(int n, vector<vector<int>>& requirements) 
-    {   
+    {
         vector<long long> arr(n + 1, -1);
         for (auto it : requirements) {
             long long first = it[0];
