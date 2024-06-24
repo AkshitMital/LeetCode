@@ -4,17 +4,16 @@ public:
         int n = nums.size();
         int ans = 0;
         int flipCount = 0;
-        unordered_map<int, bool> isFlipped;
 
         for(int i = 0; i < n; i++){
-            if(i >= k && isFlipped[i-k] == true){
+            if(i >= k && nums[i-k] == 1e9){
                 flipCount--;
             }
             if(flipCount % 2 == nums[i]){
                 if(i+k > n) return -1;
                 ans++;
                 flipCount++;
-                isFlipped[i]=true;
+                nums[i] = 1e9;
             }
         }
 
