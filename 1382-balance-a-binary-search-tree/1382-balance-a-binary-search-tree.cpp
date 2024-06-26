@@ -29,8 +29,8 @@ private:
     }
 public:
     TreeNode* balanceBST(TreeNode* root) {
-        vector<int> vec;
-        findSortedArray(root, vec);
-        return solve(0, vec.size()-1, vec);
+        vector<int> inorder;
+        findSortedArray(root, inorder);
+        return solve(0, inorder.size()-1, inorder);
     }
 };
