@@ -10,7 +10,7 @@ public:
                 num += (consec-customers[i][0]);
             }
             else {
-                consec = 0;
+                consec = customers[i][0] + customers[i][1];
                 num += customers[i][1];
             }
         }
