@@ -1,19 +1,21 @@
 class Solution {
 public:
     double averageWaitingTime(vector<vector<int>>& customers) {
-        double n = customers.size();
-        double consec = customers[0][0] + customers[0][1];
-        double num = customers[0][1];
-        for(int i = 1; i < n; i++){
-            if(customers[i][0] < consec) {
-                consec += customers[i][1];
-                num += (consec-customers[i][0]);
+        int currentTime = 0;
+        double totalWaitTime = 0.0;
+
+        for (const auto& customer : customers) {
+            int arrivalTime = customer[0];
+            int cookingTime = customer[1];
+
+            if (currentTime < arrivalTime) {
+                currentTime = arrivalTime;
             }
-            else {
-                consec = customers[i][0] + customers[i][1];
-                num += customers[i][1];
-            }
+
+            currentTime += cookingTime;
+            totalWaitTime += (currentTime - arrivalTime);
         }
-        return num/n;
+
+        return totalWaitTime / customers.size();
     }
 };
