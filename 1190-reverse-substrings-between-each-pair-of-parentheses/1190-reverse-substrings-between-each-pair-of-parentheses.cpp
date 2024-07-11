@@ -1,33 +1,46 @@
+string shit(int & i,string s,int len){
+    string b="";
+    string extra="";
+    int flag=0;
+    while(i<len){
+        if(flag==0){
+            if(s[i]=='('){
+                flag=1;
+            }
+            else if(isalpha(s[i])){
+                b+=s[i];
+            }
+        }
+        else if(flag==1){
+            if(isalpha(s[i])){
+                extra+=s[i];
+            }
+            else if(s[i]==')'){
+                reverse(extra.begin(),extra.end());
+                b+=extra;
+                //i++;
+                return b;
+            }
+            else if(s[i]=='('){
+                //i++;
+                extra+=shit(i,s,len);
+                
+            }
+        }
+        i++;
+    }
+    return b;
+}
+
 class Solution {
 public:
     string reverseParentheses(string s) {
-        stack<char> stk;
-        for (char c : s) {
-            if (c == ')') {
-                // When we encounter a closing parenthesis, we need to reverse the content inside the parentheses.
-                string temp;
-                while (!stk.empty() && stk.top() != '(') {
-                    temp += stk.top();
-                    stk.pop();
-                }
-                // Pop the opening parenthesis
-                if (!stk.empty() && stk.top() == '(') {
-                    stk.pop();
-                }
-                // Push the reversed string back onto the stack
-                for (char ch : temp) {
-                    stk.push(ch);
-                }
-            } else {
-                // Push the current character onto the stack
-                stk.push(c);
-            }
-        }
-        // Construct the final answer from the stack
-        string ans;
-        while (!stk.empty()) {
-            ans = stk.top() + ans;
-            stk.pop();
+        string ans="";
+        int len=s.size();
+        int i=0;
+        //ans=shit(i,s,len);
+        while(i<len){
+            ans+=shit(i,s,len);
         }
         return ans;
     }
