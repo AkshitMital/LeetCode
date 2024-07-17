@@ -22,9 +22,8 @@ private:
             if(root->right != NULL) res.push_back(root->right);
             return NULL;
         }
-        else{
-            return root;
-        }
+            
+        return root;
     }
 public:
     vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
