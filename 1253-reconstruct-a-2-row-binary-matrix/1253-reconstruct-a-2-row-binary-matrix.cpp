@@ -24,7 +24,6 @@ public:
         }
 
         if(lower == 0 && upper == 0) return ans;
-
         return {};
     }
 };
