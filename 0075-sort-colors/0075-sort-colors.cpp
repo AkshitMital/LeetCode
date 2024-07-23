@@ -14,20 +14,5 @@ public:
         }
 
         nums = ans;
-
-        // for(int i = 0; i < nums.size(); i++){
-        //     while(mpp[0]){
-        //         nums[i] = 0;
-        //         mpp[0]--;
-        //     }
-        //     while(mpp[1]){
-        //         nums[i] = 0;
-        //         mpp[0]--;
-        //     }
-        //     while(mpp[2]){
-        //         nums[i] = 0;
-        //         mpp[0]--;
-        //     }
-        // }
     }
 };
