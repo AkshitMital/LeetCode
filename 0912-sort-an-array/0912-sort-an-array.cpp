@@ -44,9 +44,7 @@ private:
 public:
     vector<int> sortArray(vector<int>& nums) {
 
-        if(nums.empty()){
-            return nums;
-        }
+        if(nums.empty()) return nums;
 
         int low = 0;
         int high = nums.size()-1;
@@ -56,3 +54,41 @@ public:
         return nums;
     }
 };
+
+// class Solution {
+// private:
+//     int partition(vector<int>& nums, int low, int high)
+//     {
+//         int i = low, j = high, pivot = nums[low];
+//         while(i < j){
+//             while(i <= high-1 && nums[i] <= pivot) i++;
+//             while(j >= low+1 && nums[j] > pivot) j--;
+
+//             if(i < j) swap(nums[i], nums[j]);
+//         }
+
+//         swap(nums[j], nums[low]);
+
+//         return j;
+//     }
+
+//     void QuickSort(vector<int>& nums, int low, int high)
+//     {
+//         if(low >= high) return;
+//         int pindex = partition(nums,low,high);
+//         QuickSort(nums,low,pindex-1);
+//         QuickSort(nums,pindex+1,high);
+//     }
+// public:
+//     vector<int> sortArray(vector<int>& nums) 
+//     {
+//         if(nums.empty()) return nums;
+        
+//         int low = 0;
+//         int high = nums.size() - 1;
+
+//         QuickSort(nums, low, high);
+
+//         return nums;
+//     }
+// };
