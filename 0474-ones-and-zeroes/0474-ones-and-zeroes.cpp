@@ -71,19 +71,17 @@ public:
         vector<vector<vector<int>>> dp(strs.size() + 1, vector<vector<int>>(m + 1, vector<int>(n + 1, 0)));
 
         for(int ind = 1; ind <= strs.size(); ind++){
-            pair<int, int> count;
             int cnt0 = 0, cnt1 = 0;
             for (char ch : strs[ind-1]) {
                 if (ch == '0') cnt0++;
                 if (ch == '1') cnt1++;
             }
-            count = {cnt0, cnt1};
             for(int j = 0; j <= m; j++){
                 for(int k = 0; k <= n; k++){
                     int not_take = dp[ind - 1][j][k];
                     int take = INT_MIN;
-                    if (j >= count.first && k >= count.second) {
-                        take = 1 + dp[ind - 1][j - count.first][k - count.second];
+                    if (j >= cnt0 && k >= cnt1) {
+                        take = 1 + dp[ind - 1][j - cnt0][k - cnt1];
                     }
 
                     dp[ind][j][k] = max(take, not_take);
