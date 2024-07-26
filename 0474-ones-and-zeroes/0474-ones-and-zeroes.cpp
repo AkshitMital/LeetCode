@@ -17,8 +17,7 @@ public:
     int findMaxForm(vector<string>& strs, int m, int n) {
         vector<pair<int, int>> count; // {zeroes, ones}
         for (int i = 0; i < strs.size(); i++) {
-            int cnt0 = 0;
-            int cnt1 = 0;
+            int cnt0 = 0, cnt1 = 0;
             for (char ch : strs[i]) {
                 if (ch == '0') cnt0++;
                 if (ch == '1') cnt1++;
