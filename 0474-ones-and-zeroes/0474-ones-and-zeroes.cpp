@@ -31,28 +31,59 @@
 // };
 
 
+// class Solution {
+// public:
+//     int findMaxForm(vector<string>& strs, int m, int n) {
+//         vector<pair<int, int>> count; // {zeroes, ones}
+//         vector<vector<vector<int>>> dp(strs.size() + 1, vector<vector<int>>(m + 1, vector<int>(n + 1, 0)));
+
+//         for (int i = 0; i < strs.size(); i++) {
+//             int cnt0 = 0, cnt1 = 0;
+//             for (char ch : strs[i]) {
+//                 if (ch == '0') cnt0++;
+//                 if (ch == '1') cnt1++;
+//             }
+//             count.push_back({cnt0, cnt1});
+//         }
+
+//         for(int ind = 1; ind <= strs.size(); ind++){
+//             for(int j = 0; j <= m; j++){
+//                 for(int k = 0; k <= n; k++){
+//                     int not_take = dp[ind - 1][j][k];
+//                     int take = INT_MIN;
+//                     if (j >= count[ind - 1].first && k >= count[ind - 1].second) {
+//                         take = 1 + dp[ind - 1][j - count[ind - 1].first][k - count[ind - 1].second];
+//                     }
+
+//                     dp[ind][j][k] = max(take, not_take);
+//                 }
+//             }
+//         }
+
+//         return dp[strs.size()][m][n];
+//     }
+// };
+
+
 class Solution {
 public:
     int findMaxForm(vector<string>& strs, int m, int n) {
-        vector<pair<int, int>> count; // {zeroes, ones}
         vector<vector<vector<int>>> dp(strs.size() + 1, vector<vector<int>>(m + 1, vector<int>(n + 1, 0)));
 
-        for (int i = 0; i < strs.size(); i++) {
+        for(int ind = 1; ind <= strs.size(); ind++){
+            pair<int, int> count;
             int cnt0 = 0, cnt1 = 0;
-            for (char ch : strs[i]) {
+            for (char ch : strs[ind-1]) {
                 if (ch == '0') cnt0++;
                 if (ch == '1') cnt1++;
             }
-            count.push_back({cnt0, cnt1});
-        }
-
-        for(int ind = 1; ind <= strs.size(); ind++){
+            count = {cnt0, cnt1};
             for(int j = 0; j <= m; j++){
                 for(int k = 0; k <= n; k++){
                     int not_take = dp[ind - 1][j][k];
                     int take = INT_MIN;
-                    if (j >= count[ind - 1].first && k >= count[ind - 1].second) {
-                        take = 1 + dp[ind - 1][j - count[ind - 1].first][k - count[ind - 1].second];
+                    if (j >= count.first && k >= count.second) {
+                        take = 1 + dp[ind - 1][j - count.first][k - count.second];
                     }
 
                     dp[ind][j][k] = max(take, not_take);
