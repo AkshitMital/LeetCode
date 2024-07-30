@@ -25,10 +25,10 @@ public:
 
         int count_b = 0, ans = INT_MAX;
 
-        for(int i = 0; i < s.length(); i++){
-            if(s[i] == 'a') total_a--;
+        for(char ch : s){
+            if(ch == 'a') total_a--;
             ans = min(ans, total_a + count_b);
-            if(s[i] == 'b') count_b++;
+            if(ch == 'b') count_b++;
         }
 
         return ans;
