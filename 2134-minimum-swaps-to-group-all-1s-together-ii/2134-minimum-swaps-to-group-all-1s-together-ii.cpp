@@ -1,30 +1,26 @@
 class Solution {
-private:
-    int solve(vector<int>& nums, int val){
-        int opp = !val;
-        int total1 = 0;
-        for(auto num : nums){
-            if(num == val) total1++;
-        }
-
-        int s = 0, e = 0, curr = 0, ans = INT_MAX;
-
-        while(e < total1){
-            if(nums[e] == opp) curr++;
-            ans = curr;
-            e++;
-        }
-
-        while(e < nums.size()){
-            if(nums[s++] == opp) curr--;
-            if(nums[e++] == opp) curr++;
-            ans = min(ans, curr);
-        }
-
-        return ans;
-    }
 public:
     int minSwaps(vector<int>& nums) {
-        return min(solve(nums,1), solve(nums, 0));
+        int n = nums.size();
+        int s = 0, e = 0, maxCount1 = 0, currCount1 = 0, totalCount1 = 0;
+
+        for(auto num : nums){
+            if(num == 1) totalCount1++;
+        }
+
+        while(e < totalCount1){
+            if(nums[e++] == 1) currCount1++;
+            maxCount1 = max(maxCount1, currCount1);
+        }
+
+        while(e < 2*n){
+            if(nums[s%n] == 1) currCount1--;
+            s++;
+            if(nums[e%n] == 1) currCount1++;
+            e++;
+            maxCount1 = max(maxCount1, currCount1);
+        }
+
+        return totalCount1 - maxCount1;
     }
 };
