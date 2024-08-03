@@ -2,9 +2,9 @@ class Solution {
 public:
     bool canBeEqual(vector<int>& target, vector<int>& arr) {
         unordered_map<int,int> mpp;
-        for(auto num : arr) mpp[num]++;
-        for(auto num : target){
-            if(mpp[num] == 0 || mpp.find(num)==mpp.end()) return false;
+        for(int& num : arr) mpp[num]++;
+        for(int& num : target){
+            if(mpp[num] == 0) return false;
             mpp[num]--;
         }
 
