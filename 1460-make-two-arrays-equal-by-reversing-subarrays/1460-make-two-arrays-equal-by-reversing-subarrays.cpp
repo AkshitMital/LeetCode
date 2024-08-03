@@ -4,7 +4,7 @@ public:
         unordered_map<int,int> mpp;
         for(int& num : arr) mpp[num]++;
         for(int& num : target){
-            if(mpp[num] == 0) return false;
+            if(mpp[num] == 0 || mpp.find(num)==mpp.end()) return false;
             mpp[num]--;
         }
 
