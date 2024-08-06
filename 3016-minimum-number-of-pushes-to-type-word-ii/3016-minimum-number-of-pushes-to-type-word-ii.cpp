@@ -9,6 +9,7 @@ public:
         int ans = 0;
         int mul = 1;
         int temp = 2;
+        
         while(!pq.empty()){
             char ch = pq.top().second;
             int num = pq.top().first;
