@@ -15,7 +15,6 @@ private:
     }
     int numberofislands(vector<vector<int>> grid, int& m, int& n){
         int islands = 0;
-        // vector<vector<int>> vis(m, vector<int>(n, 0));
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
                 if(grid[i][j]){
@@ -33,14 +32,14 @@ public:
         int numislands = numberofislands(grid, m, n);
         // Case 0
         if(numislands > 1 || numislands == 0) return 0;
-
         // Case 1
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
                 if(grid[i][j]){
-                    grid[i][j] == 0;
-                    int totalislands = numberofislands(grid, m, n);
-                    if(totalislands == 0 || totalislands > 1) return 1;
+                    grid[i][j] = 0;
+                    numislands = numberofislands(grid, m, n);
+                    if(numislands == 0 || numislands > 1) return 1;
+                    grid[i][j] = 1;
                 }
             }
         }
