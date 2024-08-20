@@ -1,22 +1,30 @@
 class Solution {
-public:
-    int stoneGameII(vector<int>& piles) {
-        int length = piles.size();
-        vector<vector<int>>dp(length + 1, vector<int>(length + 1,0));
-        vector<int> sufsum (length + 1, 0);
-        for (int i = length - 1; i >= 0; i--) {
-            sufsum[i] = sufsum[i + 1] + piles[i];
-        }
-        for (int i = 0; i <= length; i++) {
-            dp[i][length] = sufsum[i];
-        }
-        for (int i = length - 1; i >= 0; i--) {
-            for (int j = length - 1; j >= 1; j--) {
-                for (int X = 1; X <= 2 * j && i + X <= length; X++) {
-                    dp[i][j] = max(dp[i][j], sufsum[i] - dp[i + X][max(j, X)]);
-                }
+private:
+    int solve(int player, int ind, int M, vector<int>& piles, vector<vector<vector<int>>>& dp, int& n){
+        if(ind >= n) return 0;
+        if(dp[player][ind][M] != -1) return dp[player][ind][M];
+        int result = (player == 1) ? INT_MIN : INT_MAX;
+        int stones = 0;
+
+        for(int X = 1; X <= min(2*M, n-ind); X++){
+            stones += piles[ind + X - 1];
+            
+            if(player == 1){
+                result = max(result, stones + solve(0, ind + X, max(M,X), piles, dp, n));
+            }
+            else{
+                result = min(result, solve(1, ind + X, max(M,X), piles, dp, n));
             }
         }
-        return dp[0][1];
+
+        return dp[player][ind][M] = result;
+    }
+public:
+    int stoneGameII(vector<int>& piles) {
+        int n = piles.size();
+        vector<vector<vector<int>>> dp(2, vector<vector<int>>(n+1, vector<int>(n+1, -1)));
+        // 1 -> Alice
+        // 0 -> Bob
+        return solve(1, 0, 1, piles, dp, n);
     }
 };
