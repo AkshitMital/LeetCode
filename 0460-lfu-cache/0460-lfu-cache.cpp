@@ -52,11 +52,11 @@ public:
             freq[1].push_front(vector<int>({key, value, 1}));
             mpp[key] = freq[1].begin();
         }else{
-            auto kaun_sa_list = freq.begin()->second;
+            auto &kaun_sa_list = freq.begin()->second;
             int key_to_delete = (kaun_sa_list.back())[0];
 
             kaun_sa_list.pop_back();
-            
+
             if(kaun_sa_list.empty()) freq.erase(freq.begin()->first);
             freq[1].push_front(vector<int>({key, value, 1}));
 
