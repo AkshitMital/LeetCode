@@ -1,43 +1,90 @@
+// class LRUCache {
+// private:
+//     int n;
+//     vector<pair<int,int>> cache;
+// public:
+//     LRUCache(int capacity) {
+//         n = capacity;
+//     }
+    
+//     int get(int key) {
+//         for(int i = 0; i < cache.size(); i++){
+//             if(cache[i].first == key){
+//                 int val = cache[i].second;
+
+//                 pair<int, int> temp = cache[i];
+
+//                 cache.erase(cache.begin() + i);
+//                 cache.push_back(temp);
+
+//                 return val;
+//             }
+//         }
+
+//         return -1;
+//     }
+    
+//     void put(int key, int value) {
+//         for(int i = 0; i < cache.size(); i++){
+//             if(cache[i].first == key){
+//                 cache.erase(cache.begin() + i);
+//                 cache.push_back({key, value});
+//                 return;
+//             }
+//         }
+
+//         if(cache.size() == n){
+//             cache.erase(cache.begin());
+//             cache.push_back({key, value});
+//         }
+//         else cache.push_back({key, value});
+
+//         return;
+//     }
+// };
+
 class LRUCache {
 private:
-    list<int> dll;
-    unordered_map<int, pair<list<int>::iterator, int>> mpp; // key -> {address, val}
     int n;
+    list<int> cache;
+    map<int, pair<list<int>::iterator, int>> DLLMap;
 public:
     LRUCache(int capacity) {
         n = capacity;
     }
-
-    void makeRecentlyUsed(int key){
-        dll.erase(mpp[key].first);
-        dll.push_front(key);
-        mpp[key].first = dll.begin();
-    }
     
     int get(int key) {
-        if(mpp.find(key) == mpp.end()) return -1;
+        if(DLLMap.find(key) == DLLMap.end()) return -1;
 
-        makeRecentlyUsed(key);
+        int val = DLLMap[key].second;
+        auto address = DLLMap[key].first; 
+        cache.erase(address);
+        cache.push_front(key);
+        DLLMap[key].first = cache.begin();
 
-        return mpp[key].second;
+        return val;
     }
     
     void put(int key, int value) {
-        if(mpp.find(key) != mpp.end()){
-            mpp[key].second = value;
-            makeRecentlyUsed(key);
+        if(DLLMap.find(key) != DLLMap.end()){
+            auto address = DLLMap[key].first; 
+            cache.erase(address);
+            cache.push_front(key);
+            DLLMap[key].first = cache.begin();
+            DLLMap[key].second = value;
         }else{
-            dll.push_front(key);
-            mpp[key] = {dll.begin(), value};
+            cache.push_front(key);
+            DLLMap[key] = {cache.begin(), value};
             n--;
         }
 
         if(n < 0){
-            int keytobedel = dll.back();
-            dll.pop_back();
-            mpp.erase(keytobedel);
+            int delkey = cache.back();
+            cache.pop_back();
+            DLLMap.erase(delkey);
             n++;
         }
+
     }
 };
 
