@@ -1,7 +1,6 @@
 class BrowserHistory {
-private:
+    stack<string> present;
     stack<string> past;
-    stack<string> future;
     string curr;
 public:
     BrowserHistory(string homepage) {
@@ -9,31 +8,28 @@ public:
     }
     
     void visit(string url) {
-        past.push(curr);
+        present.push(curr);
+        past = stack<string>();
         curr = url;
-
-        future = stack<string>();
     }
     
     string back(int steps) {
-        while(steps > 0 && !past.empty()){
-            future.push(curr);
-            curr = past.top();
-            past.pop();
+        while(steps != 0 && !present.empty()){
+            past.push(curr);
+            curr = present.top();
+            present.pop();
             steps--;
         }
-
         return curr;
     }
     
     string forward(int steps) {
-        while(steps > 0 && !future.empty()){
-            past.push(curr);
-            curr = future.top();
-            future.pop();
+        while(steps != 0 && !past.empty()){
+            present.push(curr);
+            curr = past.top();
+            past.pop();
             steps--;
         }
-
         return curr;
     }
 };
