@@ -1,20 +1,18 @@
 class Solution {
 public:
     vector<long long> mostFrequentIDs(vector<int>& nums, vector<int>& freq) {
-        int n = nums.size();
-        unordered_map<long long, long long> mpp;
-        vector<long long> ans(n,0);
+        unordered_map<long long, long long> ID_freq;
         priority_queue<pair<long long, long long>> pq;
+        int n = nums.size();
+        vector<long long> ans(n, INT_MIN);
         for(int i = 0; i < n; i++){
-            int ID = nums[i];
+            int id = nums[i];
             int f = freq[i];
 
-            mpp[ID] += f;
-            pq.push({mpp[ID], ID});
+            ID_freq[id] += f;
+            pq.push({ID_freq[id], id});
 
-            while(mpp[pq.top().second] != pq.top().first){
-                pq.pop();
-            }
+            while(ID_freq[pq.top().second] != pq.top().first) pq.pop();
 
             ans[i] = pq.top().first;
         }
