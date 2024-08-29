@@ -1,36 +1,29 @@
-class disjoint_set{
-public:
+class DSU{
+private:
     vector<int> parent, size;
-
-    disjoint_set(int n){
+public:
+    DSU(int n){
         parent.resize(n+1);
-        size.resize(n+1,1);
-
-        for(int i = 0; i<=n ; i++){
-            parent[i] = i;
-        }
+        size.resize(n+1, 1);
+        for(int i = 0; i <= n; i++) parent[i] = i;
     }
 
     int findUlp(int node){
-        if(parent[node] == node){
-            return node;
-        }
-
+        if(parent[node] == node) return node;
         return parent[node] = findUlp(parent[node]);
     }
 
     void unionBySize(int u, int v){
         int ulp_u = findUlp(u);
         int ulp_v = findUlp(v);
-
         if(ulp_u == ulp_v) return;
-
         if(size[ulp_u] < size[ulp_v]){
-            parent[ulp_u] = ulp_v;
             size[ulp_v] += size[ulp_u];
-        }else{
-            parent[ulp_v] = ulp_u;
+            parent[ulp_u] = ulp_v;
+        }
+        else{
             size[ulp_u] += size[ulp_v];
+            parent[ulp_v] = ulp_u;
         }
     }
 };
@@ -39,27 +32,32 @@ class Solution {
 public:
     int removeStones(vector<vector<int>>& stones) {
         int maxRow = 0, maxCol = 0;
-        for(auto it : stones){
-            maxRow = max(maxRow, it[0]);
-            maxCol = max(maxCol, it[1]);
-        }
-        disjoint_set ds(maxRow + maxCol + 1);
-        unordered_map<int,int> mpp;
-        for(auto it : stones){
-            int nodeRow = it[0];
-            int nodeCol = it[1] + maxRow + 1;
-            ds.unionBySize(nodeRow, nodeCol);
-            mpp[nodeRow] = 1;
-            mpp[nodeCol] = 1;
+
+        for(auto stone : stones){
+            maxRow = max(maxRow, stone[0]);
+            maxCol = max(maxCol, stone[1]);
         }
 
-        int cnt = 0;
-        for(auto it : mpp){
-            if(ds.findUlp(it.first) == it.first){
-                cnt++;
+        DSU disjoint_set(maxRow + maxCol + 1);
+        unordered_map<int,bool> stoneNodes;
+
+        for(auto stone : stones){
+            int RowNode = stone[0];
+            int ColNode = stone[1] + maxRow + 1;
+
+            disjoint_set.unionBySize(RowNode, ColNode);
+            stoneNodes[RowNode] = true;
+            stoneNodes[ColNode] = true;
+        }
+
+        int components = 0, n = stones.size();
+
+        for(auto stoneNode : stoneNodes){
+            if(disjoint_set.findUlp(stoneNode.first) == stoneNode.first){
+                components++;
             }
         }
 
-        return stones.size() - cnt;
+        return n - components;
     }
 };
