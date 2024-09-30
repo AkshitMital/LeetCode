@@ -22,8 +22,8 @@ public:
     }
     
     void increment(int k, int val) {
-        for(int i = 0; i < k; i++){
-            if(i > top) break;
+        for(int i = 0; i < min(k,top+1); i++){
+            // if(i > top) break;
             arr[i] += val;
         }
     }
