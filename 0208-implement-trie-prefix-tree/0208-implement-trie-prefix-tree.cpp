@@ -46,9 +46,8 @@ public:
         for(int i = 0; i < word.length(); i++){
             int idx = word[i] - 'a';
 
-            if(crawler->children[idx] == NULL){
+            if(crawler->children[idx] == NULL)
                 return false;
-            }
 
             crawler = crawler->children[idx];
         }
@@ -64,9 +63,8 @@ public:
         for(int i = 0; i < prefix.length(); i++){
             int idx = prefix[i] - 'a';
 
-            if(crawler->children[idx] == NULL){
+            if(crawler->children[idx] == NULL)
                 return false;
-            }
 
             crawler = crawler->children[idx];
         }
