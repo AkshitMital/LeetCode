@@ -1,40 +1,32 @@
 class Solution {
-public:
-    // Function to compute the LPS (Longest Proper Prefix which is also Suffix) array
-    void computeLPS(string pattern, vector<int>& lps) {
-        int M = pattern.length();
-        int len = 0; // Length of the previous longest prefix & suffix
-    
-        lps[0] = 0; // Because there is no proper suffix and prefix of pattern[0..0]
-    
-        int i = 1;
-        while (i < M) {
-            if (pattern[i] == pattern[len]) {
+private:
+    int computeLPS(string& temp, int n){
+        vector<int> LPS(n, 0);
+        int i = 1, len = 0;
+        while(i < n){
+            if(temp[len] == temp[i]){
                 len++;
-                lps[i] = len;
+                LPS[i] = len;
                 i++;
-            } else {
-                if (len != 0) {
-                    len = lps[len - 1]; //You can also write, len = len-1;
-                } else {
-                    lps[i] = 0;
+            }
+            else{
+                if(len == 0){
+                    LPS[i] = 0;
                     i++;
                 }
+                else len = LPS[len-1];
             }
         }
+
+        return LPS[n-1];
     }
+public:
     string shortestPalindrome(string s) {
         string rev = s;
-        reverse(begin(rev), end(rev));
-
-        string temp = s + "-" + rev;
-
-        vector<int> LPS(temp.length(), 0); //O(n)
-        computeLPS(temp, LPS);
-
-        int longestLPSLength = LPS[temp.length()-1]; //temp.back();
-
-        string culprit = rev.substr(0, s.length() - longestLPSLength); //O(n)
+        reverse(rev.begin(), rev.end());
+        string temp = s + "#" + rev;
+        int LPS = computeLPS(temp, temp.size());
+        string culprit = rev.substr(0, s.length() - LPS);
 
         return culprit + s;
     }
