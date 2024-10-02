@@ -1,31 +1,31 @@
 class Solution {
+private:
+    int count(long long curr, long long next, long long n){
+        int countNum = 0;
+        while(curr <= n){
+            countNum += (next-curr);
+            curr *= 10;
+            next *= 10;
+            next = min(next, n+1);
+        }
+        return countNum;
+    }
 public:
     int findKthNumber(int n, int k) {
         int curr = 1;
         k--;
 
-        while (k > 0) {
-            int step = countSteps(n, curr, curr + 1);
-            if (step <= k) {
-                curr++;
-                k -= step;
-            } else {
+        while(k){
+            int steps = count(curr, curr+1, n);
+            if(steps <= k){
+                curr += 1;
+                k -= steps;
+            }else{
                 curr *= 10;
                 k--;
             }
         }
 
         return curr;
-    }
-
-private:
-    int countSteps(int n, long prefix1, long prefix2) {
-        int steps = 0;
-        while (prefix1 <= n) {
-            steps += min((long)(n + 1), prefix2) - prefix1;
-            prefix1 *= 10;
-            prefix2 *= 10;
-        }
-        return steps;
     }
 };
