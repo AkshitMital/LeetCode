@@ -1,49 +1,66 @@
-struct TrieNode {
-    TrieNode* next[26] = {};
-    int cnt = 0;
+class TrieNode{
+private:
+    int prefix;
+    TrieNode* children[26];
+    friend class Trie;
+};
+
+class Trie{
+private:
+    TrieNode* root;
+    TrieNode* getNode(){
+        TrieNode* newNode = new TrieNode();
+        newNode->prefix = 0;
+        for(int i = 0; i < 26; i++) newNode->children[i] = NULL;
+        return newNode;
+    }
+public:
+    Trie() { root = getNode(); }
+
+    void insert(string str){
+        TrieNode* crawler = root;
+        for(int i = 0; i < str.size(); i++){
+            int idx = str[i] - 'a';
+
+            if(crawler->children[idx] == nullptr)
+                crawler->children[idx] = getNode();
+
+            crawler->children[idx]->prefix += 1;
+
+            crawler = crawler->children[idx];
+        }
+    }
+
+    int getTotalPrefix(string str){
+        TrieNode* crawler = root;
+        int total = 0;
+        for(int i = 0; i < str.size(); i++){
+            int idx = str[i] - 'a';
+
+            total += crawler->children[idx]->prefix;
+
+            crawler = crawler->children[idx];
+        }
+
+        return total;
+    }
 };
 
 class Solution {
-    // Initialize the root node of the trie.
-    TrieNode root;
-
 public:
-    // Insert function for the word.
-    void insert(string word) {
-        auto node = &root;
-        for (char c : word) {
-            // If new prefix, create a new trie node.
-            if (!node->next[c - 'a']) {
-                node->next[c - 'a'] = new TrieNode();
-            }
-            // Increment the count of the current prefix.
-            node->next[c - 'a']->cnt++;
-            node = node->next[c - 'a'];
-        }
-    }
-    // Calculate the prefix count using this function.
-    int count(string s) {
-        auto node = &root;
-        int ans = 0;
-        // The ans would store the total sum of counts.
-        for (char c : s) {
-            ans += node->next[c - 'a']->cnt;
-            node = node->next[c - 'a'];
-        }
-        return ans;
-    }
-
     vector<int> sumPrefixScores(vector<string>& words) {
-        int N = words.size();
-        // Insert words in trie.
-        for (int i = 0; i < N; i++) {
-            insert(words[i]);
+        Trie trie;
+        vector<int> ans;
+
+        for(string& word : words){
+            trie.insert(word);
         }
-        vector<int> scores(N, 0);
-        for (int i = 0; i < N; i++) {
-            // Get the count of all prefixes of given string.
-            scores[i] = count(words[i]);
+
+        for(string& word : words){
+            int totalPrefix = trie.getTotalPrefix(word);
+            ans.push_back(totalPrefix);
         }
-        return scores;
+
+        return ans;
     }
 };
