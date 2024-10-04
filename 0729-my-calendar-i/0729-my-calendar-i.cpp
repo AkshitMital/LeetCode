@@ -1,23 +1,27 @@
 class MyCalendar {
-private:
-    set<pair<int, int>> calendar;
-
+set<pair<int,int>> st;
 public:
+    MyCalendar() {}
+    
     bool book(int start, int end) {
-        const pair<int, int> event{start, end};
-        const auto nextEvent = calendar.lower_bound(event);
-        if (nextEvent != calendar.end() && nextEvent->first < end) {
-            return false;
+        pair<int,int> curr = {start, end};
+
+        auto it = lower_bound(st.begin(), st.end(), curr);
+        if(it != st.end() && it->first < end) return false;
+
+        if(it != st.begin()){
+            auto prevIt = prev(it);
+            if(prevIt->second > start) return false;
         }
 
-        if (nextEvent != calendar.begin()) {
-            const auto prevEvent = prev(nextEvent);
-            if (prevEvent->second > start) {
-                return false;
-            }
-        }
+        st.insert(curr);
 
-        calendar.insert(event);
         return true;
     }
 };
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar* obj = new MyCalendar();
+ * bool param_1 = obj->book(start,end);
+ */
