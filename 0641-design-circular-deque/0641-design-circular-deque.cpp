@@ -134,7 +134,7 @@ public:
 
         Node* temp = head;
 
-        if(head->next){
+        if(head != tail){
             head = head->next;
             head->prev = tail;
             tail->next = head;
@@ -154,7 +154,7 @@ public:
 
         Node* temp = tail;
 
-        if(tail->prev){
+        if(head != tail){
             tail = tail->prev;
             head->prev = tail;
             tail->next = head;
