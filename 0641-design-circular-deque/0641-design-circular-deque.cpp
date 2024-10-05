@@ -9,14 +9,14 @@ public:
     MyCircularDeque(int k) {
         queue.resize(k);
         cap = k;
-        front = -1;
-        rear = -1;
+        front = 0;
+        rear = k-1;
         size = 0;
     }
     
     bool insertFront(int value) {
         if(isFull()) return false;
-        front = (front + 1) % cap;
+        front = (front - 1 + cap) % cap;
         queue[front] = value;
         size++;
         return true;
@@ -39,7 +39,7 @@ public:
     
     bool deleteLast() {
         if(isEmpty()) return false;
-        rear = (rear + 1) % cap;
+        rear = (rear - 1 + cap) % cap;
         size--;
         return true;
     }
