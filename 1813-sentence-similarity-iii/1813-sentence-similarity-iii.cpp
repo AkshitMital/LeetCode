@@ -10,14 +10,14 @@ private:
         stringstream ss2(s2);
         while(ss2 >> token) vec2.push_back(token);
 
-        int i = 0, j = s1.length()-1, k = 0, l = s2.length()-1;
+        int i = 0, j = vec1.size()-1, k = 0, l = vec2.size()-1;
 
-        while(s1[i] == s2[k]){
+        while(i < vec1.size() && k < vec2.size() && vec1[i] == vec2[k]){
             i++;
             k++;
         }
 
-        while(s1[j] == s2[l]){
+        while(j >= 0 && l >= 0 && vec1[j] == vec2[l]){
             j--;
             l--;
         }
