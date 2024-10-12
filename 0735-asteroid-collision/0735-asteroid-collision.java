@@ -21,10 +21,20 @@ class Solution {
             if(!exploded) st.add(size);
         }
 
-        int[] arr = new int[st.size()];
-        for (int i = st.size() - 1; i >= 0; i--) { 
-            arr[i] = st.pop();
+        ArrayList<Integer> arr = new ArrayList<>();
+
+        while (!st.isEmpty()) { 
+            arr.add(st.pop());
         }
-        return arr;
+
+        Collections.reverse(arr);  
+
+        int[] ans = new int[arr.size()];
+
+        for (int i = 0; i < arr.size(); i++) {
+            ans[i] = arr.get(i);
+        }
+
+        return ans;
     }
 }
