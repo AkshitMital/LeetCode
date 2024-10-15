@@ -1,6 +1,6 @@
 class TrieNode{
 private:
-    bool inEndofWord;
+    bool isEnd;
     TrieNode* children[26];
     friend class Trie;
 };
@@ -9,12 +9,14 @@ class Trie {
 private:
     TrieNode* root;
 
-    TrieNode* getNode() {
+    TrieNode* getNode(){
         TrieNode* newNode = new TrieNode();
+        
+        newNode->isEnd = false;
 
-        newNode->inEndofWord = false;
-
-        for(int i = 0; i < 26; i++) newNode->children[i] = NULL;
+        for(int i = 0; i < 26; i++){
+            newNode->children[i] = NULL;
+        }
 
         return newNode;
     }
@@ -30,14 +32,13 @@ public:
         for(int i = 0; i < word.length(); i++){
             int idx = word[i] - 'a';
 
-            if(crawler->children[idx] == NULL){
+            if(crawler->children[idx] == NULL)
                 crawler->children[idx] = getNode();
-            }
 
             crawler = crawler->children[idx];
         }
 
-        crawler->inEndofWord = true;
+        crawler->isEnd = true;
     }
     
     bool search(string word) {
@@ -52,7 +53,7 @@ public:
             crawler = crawler->children[idx];
         }
 
-        if(crawler->inEndofWord == true) return true;
+        if(crawler->isEnd == true) return true;
 
         return false;
     }
