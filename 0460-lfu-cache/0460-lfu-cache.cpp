@@ -4,7 +4,7 @@ private:
     int cap;
 
     unordered_map<int, list<vector<int>>::iterator> mpp;
-    map<int,list<vector<int>>> freq;
+    map<int,list<vector<int>>> freq; // key, value, frequency
 public:
     LFUCache(int capacity) {
         cap = capacity;
@@ -14,16 +14,14 @@ public:
     void makeMostFrequentlyUsed(int key){
         auto &vec = (*mpp[key]);
 
-        int value = vec[1];
+        int val = vec[1];
         int counter = vec[2];
 
         freq[counter].erase(mpp[key]);
-
         if(freq[counter].empty()) freq.erase(counter);
 
         counter++;
-
-        freq[counter].push_front({key, value, counter});
+        freq[counter].push_front({key, val, counter});
 
         mpp[key] = freq[counter].begin();
     }
@@ -31,13 +29,11 @@ public:
     int get(int key) {
         if(mpp.find(key) == mpp.end()) return -1;
 
-        auto address = mpp[key];
-        auto vec = *address;
-        int value = vec[1];
-
+        auto vec = (*mpp[key]);
+        int val = vec[1];
         makeMostFrequentlyUsed(key);
 
-        return value;
+        return val;
     }
     
     void put(int key, int value) {
@@ -47,21 +43,23 @@ public:
             auto &vec = (*mpp[key]);
             vec[1] = value;
             makeMostFrequentlyUsed(key);
-        }else if(size < cap){
+        }
+        else if(size < cap){
+            freq[1].push_front({key, value, 1});
+            mpp[key] = freq[1].begin();
             size++;
-            freq[1].push_front(vector<int>({key, value, 1}));
+        }
+        else{
+            auto &firstList = freq.begin()->second;
+            int delKey = (firstList.back())[0];
+
+            firstList.pop_back();
+            if(firstList.empty()) freq.erase(freq.begin()->first);
+            mpp.erase(delKey);
+
+            freq[1].push_front({key, value, 1});
             mpp[key] = freq[1].begin();
-        }else{
-            auto &kaun_sa_list = freq.begin()->second;
-            int key_to_delete = (kaun_sa_list.back())[0];
-
-            kaun_sa_list.pop_back();
-
-            if(kaun_sa_list.empty()) freq.erase(freq.begin()->first);
-            freq[1].push_front(vector<int>({key, value, 1}));
-
-            mpp.erase(key_to_delete);
-            mpp[key] = freq[1].begin();
+            size++;
         }
     }
 };
