@@ -15,7 +15,6 @@ public:
         unordered_map<int,int> mpp;
         int maxi = 0;
         solve(nums, nums.size()-1, mpp, maxi, 0);
-        cout << maxi;
         return mpp[maxi];
     }
 };
