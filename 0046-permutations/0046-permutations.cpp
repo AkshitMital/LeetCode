@@ -1,6 +1,6 @@
 class Solution {
 private:
-    void solve(vector<int> temp, vector<vector<int>>& ans, vector<int>& nums, unordered_set<int>& st){
+    void solve(vector<int>& temp, vector<vector<int>>& ans, vector<int>& nums, unordered_set<int>& st){
         if(temp.size() == nums.size()){
             ans.push_back(temp);
             return;
