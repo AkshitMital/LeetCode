@@ -41,8 +41,8 @@ public:
             string currFolder = folder[i];
             string lastFolder = rootFolder.back();
             lastFolder += '/';
-            
-            if(currFolder.find(lastFolder) == std::string::npos)
+
+            if(currFolder.find(lastFolder) != 0)
                 rootFolder.push_back(currFolder);
         }
 
