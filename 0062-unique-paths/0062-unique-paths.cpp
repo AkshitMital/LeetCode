@@ -57,18 +57,4 @@ public:
         return prev[n-1];
     }
 
-//             if (i == 0 && j == 0) {
-//                 temp[j] = 1;  // Set the starting point
-//             } else {
-//                 int left = (j > 0) ? temp[j-1] : 0;
-//                 int up = (i > 0) ? prev[j] : 0;
-//                 temp[j] = up + left;
-//             }
-//         }
-//         prev = temp;
-//     }
-
-//     return prev[n-1];
-// }
-
 };
