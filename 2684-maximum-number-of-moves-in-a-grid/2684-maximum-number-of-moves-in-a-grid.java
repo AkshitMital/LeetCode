@@ -49,7 +49,7 @@ class Solution {
             next = temp;
             Arrays.fill(current, 0);
 
-            for (int row = 0; row < m; row++) {
+            for (int row = m-1; row >= 0; row--) {
                 int maxMoves = 0;
 
                 if (grid[row][col] < grid[row][col + 1]) {
