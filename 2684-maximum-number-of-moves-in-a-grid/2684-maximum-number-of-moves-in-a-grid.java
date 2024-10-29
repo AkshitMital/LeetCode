@@ -43,7 +43,7 @@ class Solution {
         int[] current = new int[m];
         int[] next = new int[m];
 
-        for (int col = n - 2; col >= 0; col--) {
+        for (int col = n - 1; col >= 0; col--) {
             int[] temp = current;
             current = next;
             next = temp;
@@ -52,15 +52,15 @@ class Solution {
             for (int row = m-1; row >= 0; row--) {
                 int maxMoves = 0;
 
-                if (grid[row][col] < grid[row][col + 1]) {
+                if (col + 1 < n && grid[row][col] < grid[row][col + 1]) {
                     maxMoves = Math.max(maxMoves, 1 + next[row]);
                 }
 
-                if (row > 0 && grid[row][col] < grid[row - 1][col + 1]) {
+                if (col + 1 < n && row > 0 && grid[row][col] < grid[row - 1][col + 1]) {
                     maxMoves = Math.max(maxMoves, 1 + next[row - 1]);
                 }
 
-                if (row < m - 1 && grid[row][col] < grid[row + 1][col + 1]) {
+                if (col + 1 < n && row < m - 1 && grid[row][col] < grid[row + 1][col + 1]) {
                     maxMoves = Math.max(maxMoves, 1 + next[row + 1]);
                 }
 
