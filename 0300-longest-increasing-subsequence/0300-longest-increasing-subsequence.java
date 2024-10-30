@@ -7,9 +7,9 @@ class Solution {
             else high = mid;
         }
 
-        if (low < lis.size() && lis.get(low) < key) {
-            low++;
-        }
+        // if (low < lis.size() && lis.get(low) < key) {
+        //     low++;
+        // }
 
         return low;
     }
