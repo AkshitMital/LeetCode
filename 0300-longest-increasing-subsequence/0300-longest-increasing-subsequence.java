@@ -1,20 +1,31 @@
 class Solution {
+    private int lower_bound(List<Integer> lis, int key){
+        int low = 0, high = lis.size()-1, mid = 0;
+        while(low < high){
+            mid = low + (high - low)/2;
+            if(lis.get(mid) < key) low = mid + 1;
+            else high = mid;
+        }
+
+        if (low < lis.size() && lis.get(low) < key) {
+            low++;
+        }
+
+        return low;
+    }
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        int[] LIS = new int[n];
-        Arrays.fill(LIS, 1);
+        List<Integer> lis = new ArrayList<>();
+        lis.add(nums[0]);
 
         for(int i = 1; i < n; i++){
-            for(int j = 0; j < i; j++){
-                if(nums[i] > nums[j]) LIS[i] = Math.max(LIS[j] + 1, LIS[i]);
+            if(lis.get(lis.size() - 1) < nums[i]) lis.add(nums[i]);
+            else{
+                int idx = lower_bound(lis, nums[i]);
+                lis.set(idx, nums[i]);
             }
         }
 
-        int maxi = 0;
-        for(int i = 0; i < n; i++){
-            maxi = Math.max(maxi, LIS[i]);
-        }
-
-        return maxi;
+        return lis.size();
     }
 }
