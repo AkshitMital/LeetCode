@@ -13,14 +13,14 @@ class Solution {
 private:
     TreeNode* buildTree(vector<int>& preorder, int preStart, int preEnd, vector<int>& inorder, int inStart, int inEnd, unordered_map<int, int>& mpp)
     {
-        if(preStart > preEnd || inStart > inEnd) return NULL;
+        if(preEnd < preStart || inEnd < inStart) return NULL;
 
         TreeNode* root = new TreeNode(preorder[preStart]);
-        int inRoot = mpp[preorder[preStart]];
-        int preLeft = inRoot - inStart;
+        int inIdx = mpp[preorder[preStart]];
+        int numsLeft = inIdx - inStart;
 
-        root->left = buildTree(preorder, preStart + 1, preStart + preLeft, inorder, inStart, inRoot-1, mpp);
-        root->right = buildTree(preorder, preStart + preLeft + 1, preEnd, inorder, inRoot+1, inEnd, mpp);
+        root->left = buildTree(preorder, preStart + 1, preStart + numsLeft, inorder, inStart, inIdx-1, mpp);
+        root->right = buildTree(preorder, preStart + numsLeft + 1, preEnd, inorder, inIdx + 1, inEnd, mpp);
 
         return root;
     }
