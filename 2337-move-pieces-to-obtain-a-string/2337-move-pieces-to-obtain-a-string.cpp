@@ -3,26 +3,21 @@ public:
     bool canChange(string start, string target) {
         int s = 0, t = 0, n = start.length();
 
-        while(s < n && t < n){
-            while(s < n && start[s] == '_') s++;
-            while(t < n && target[t] == '_') t++;
-            char Sdir = start[s];
-            char Tdir = target[t];
+        while (s < n || t < n) {
+            while (s < n && start[s] == '_') s++;
+            while (t < n && target[t] == '_') t++;
 
-            if(Sdir != Tdir) return false;
+            if ((s < n) != (t < n)) return false;
 
-            if(Sdir == 'L'){
-                if(s < t) return false;
-            }
-            else{
-                if(s > t) return false;
-            }
+            if (s == n && t == n) return true;
+
+            if (start[s] != target[t]) return false;
+
+            if (start[s] == 'L' && s < t) return false;
+            if (start[s] == 'R' && s > t) return false;
 
             s++; t++;
         }
-
-        while(t < n && target[t] == '_') t++;
-        if(t == n) return true;
 
         return true;
     }
