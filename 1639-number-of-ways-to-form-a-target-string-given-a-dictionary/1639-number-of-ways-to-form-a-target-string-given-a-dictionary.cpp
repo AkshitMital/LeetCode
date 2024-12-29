@@ -7,8 +7,8 @@ private:
         if(i == k) return 0;
         if(dp[i][j] != -1) return dp[i][j];
 
-        int not_take = solve(i + 1, j, freq, words, target, m, k, dp);
-        int take = freq[target[j] - 'a'][i] * solve(i + 1, j + 1, freq, words, target, m, k, dp);
+        int not_take = solve(i + 1, j, freq, words, target, m, k, dp) % MOD;
+        int take = freq[target[j] - 'a'][i] * solve(i + 1, j + 1, freq, words, target, m, k, dp) % MOD;
 
         return dp[i][j] = (take + not_take) % MOD;
     }
