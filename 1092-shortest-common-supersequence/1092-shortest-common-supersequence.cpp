@@ -1,46 +1,52 @@
 class Solution {
 public:
-    string shortestCommonSupersequence(string str1, string str2) {
-        int n = str1.length(), m = str2.length();
-        vector<vector<int>> dp(n+1, vector<int>(m+1,0));
-
-        for(int i = 1; i <= n; i++){
-            for(int j = 1; j <= m; j++){
-                if(str1[i-1] == str2[j-1]) dp[i][j] = 1 + dp[i-1][j-1];
-                else dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
-                cout<<dp[i][j]<<" ";
+    string shortestCommonSupersequence(string s1, string s2) {
+        
+        int m = s1.length();
+        int n = s2.length();
+        
+        vector<vector<int>> t(m+1, vector<int>(n+1));
+        
+        for(int i = 0; i<m+1; i++) {
+            for(int j = 0; j < n+1; j++) {
+                if(i == 0 || j == 0)
+                    t[i][j] = i+j;
+                else if(s1[i-1] == s2[j-1])
+                    t[i][j] = 1 + t[i-1][j-1];
+                else
+                    t[i][j] = 1 + min(t[i-1][j], t[i][j-1]);
             }
-            cout<<endl;
         }
-
-        string ans = "";
-        int i = n, j = m;
-
-        while (i > 0 && j > 0) {
-            if (str1[i - 1] == str2[j - 1]) {
-                ans += str1[i - 1];
+                
+        string scs = "";
+        int i = m,  j = n;
+        while(i > 0 && j > 0) {
+            if(s1[i-1] == s2[j-1]) {
+                scs.push_back(s1[i-1]);
                 i--;
                 j--;
-            } else if (dp[i - 1][j] > dp[i][j - 1]) {
-                ans += str1[i - 1];
-                i--;
             } else {
-                ans += str2[j - 1];
-                j--;
+                if(t[i-1][j] < t[i][j-1]) {
+                    scs.push_back(s1[i-1]);
+                    i--;
+                } else {
+                    scs.push_back(s2[j-1]);
+                    j--;
+                }
             }
         }
 
-        while (i > 0) {
-            ans += str1[i - 1];
+        //add remaining characters from both s1 and s2
+        while(i > 0) {
+            scs.push_back(s1[i-1]);
             i--;
         }
-
-        while (j > 0) {
-            ans += str2[j - 1];
+        while(j > 0) {
+            scs.push_back(s2[j-1]);
             j--;
         }
-
-        reverse(ans.begin(), ans.end());
-        return ans;
+        reverse(scs.begin(), scs.end());
+        
+        return scs;
     }
 };
