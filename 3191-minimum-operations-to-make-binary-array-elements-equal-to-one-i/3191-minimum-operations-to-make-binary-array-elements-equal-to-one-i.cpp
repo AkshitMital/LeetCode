@@ -2,20 +2,19 @@ class Solution {
 public:
     int minOperations(vector<int>& nums) {
         int n = nums.size();
-        vector<int> flip(n, 0);
-        int ans = 0;
-        int cnt = 0;
+        int flipCount = 0;
 
-        for (int i = 0; i < n; i++) {
-            if (i >= 3) cnt -= flip[i - 3];
-            
-            if ((nums[i] + cnt) % 2 == 0){
-                if (i + 2 >= n) return -1;
-                ans++;
-                cnt++;
-                flip[i] = 1;
+        for(int i = 0; i < n - 2; i++){
+            if(nums[i] == 0) {
+                nums[i] = 1;
+                nums[i + 1] = (nums[i + 1] == 0) ? 1 : 0;
+                nums[i + 2] = (nums[i + 2] == 0) ? 1 : 0;
+                flipCount++;
             }
         }
-        return ans;
+
+        if(nums[n - 2] == 0 || nums[n - 1] == 0) return -1;
+
+        return flipCount;
     }
 };
