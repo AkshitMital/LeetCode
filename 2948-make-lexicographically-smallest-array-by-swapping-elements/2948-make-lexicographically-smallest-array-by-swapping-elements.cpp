@@ -1,33 +1,42 @@
 class Solution {
 public:
     vector<int> lexicographicallySmallestArray(vector<int>& nums, int limit) {
-        int n = nums.size();
-        vector<int> temp = nums;
-        sort(temp.begin(), temp.end());
+        vector<int> numsSorted(nums);
+        sort(numsSorted.begin(), numsSorted.end());
 
-        int grpnum = 0;
-        unordered_map<int, int> num2Grp;
-        num2Grp[temp[0]] = grpnum;
+        int currGroup = 0;
+        unordered_map<int, int> numToGroup;
+        numToGroup.insert(pair<int, int>(numsSorted[0], currGroup));
 
-        unordered_map<int, list<int>> grp2List;
-        grp2List[grpnum].push_back(temp[0]);
+        unordered_map<int, list<int>> groupToList;
+        groupToList.insert(
+            pair<int, list<int>>(currGroup, list<int>(1, numsSorted[0])));
 
-        for(int i = 1; i < n; i++) {
-            if(abs(temp[i] - temp[i - 1]) > limit) grpnum++;
+        for (int i = 1; i < nums.size(); i++) {
+            if (abs(numsSorted[i] - numsSorted[i - 1]) > limit) {
+                // new group
+                currGroup++;
+            }
 
-            num2Grp[temp[i]] = grpnum;
-            grp2List[grpnum].push_back(temp[i]);
+            // assign current element to group
+            numToGroup.insert(pair<int, int>(numsSorted[i], currGroup));
+
+            // add element to sorted group list
+            if (groupToList.find(currGroup) == groupToList.end()) {
+                groupToList[currGroup] = list<int>();
+            }
+            groupToList[currGroup].push_back(numsSorted[i]);
         }
 
-        vector<int> res(n);
-        for(int i = 0; i < n; i++) {
+        // iterate through input and overwrite each element with the next
+        // element in its corresponding group
+        for (int i = 0; i < nums.size(); i++) {
             int num = nums[i];
-            int grpIdx = num2Grp[num];
-
-            res[i] = *(grp2List[grpIdx].begin());
-            grp2List[grpIdx].pop_front();
+            int group = numToGroup[num];
+            nums[i] = *groupToList[group].begin();
+            groupToList[group].pop_front();
         }
 
-        return res;
+        return nums;
     }
 };
