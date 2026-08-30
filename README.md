@@ -27,6 +27,7 @@ Each solution is stored in a separate file with the time complexity and space co
 ## Greedy
 |  |
 | ------- |
+| [2091-removing-minimum-and-maximum-from-array](https://github.com/AkshitMital/LeetCode/tree/master/2091-removing-minimum-and-maximum-from-array) |
 | [3720-lexicographically-smallest-permutation-greater-than-target](https://github.com/AkshitMital/LeetCode/tree/master/3720-lexicographically-smallest-permutation-greater-than-target) |
 ## Counting
 |  |
@@ -44,6 +45,7 @@ Each solution is stored in a separate file with the time complexity and space co
 ## Array
 |  |
 | ------- |
+| [2091-removing-minimum-and-maximum-from-array](https://github.com/AkshitMital/LeetCode/tree/master/2091-removing-minimum-and-maximum-from-array) |
 | [2948-make-lexicographically-smallest-array-by-swapping-elements](https://github.com/AkshitMital/LeetCode/tree/master/2948-make-lexicographically-smallest-array-by-swapping-elements) |
 ## Union-Find
 |  |
