@@ -10,6 +10,7 @@ Each solution is stored in a separate file with the time complexity and space co
 |  |
 | ------- |
 | [3622-check-divisibility-by-digit-sum-and-product](https://github.com/AkshitMital/LeetCode/tree/master/3622-check-divisibility-by-digit-sum-and-product) |
+| [3875-construct-uniform-parity-array-i](https://github.com/AkshitMital/LeetCode/tree/master/3875-construct-uniform-parity-array-i) |
 ## String
 |  |
 | ------- |
@@ -49,6 +50,7 @@ Each solution is stored in a separate file with the time complexity and space co
 | [2091-removing-minimum-and-maximum-from-array](https://github.com/AkshitMital/LeetCode/tree/master/2091-removing-minimum-and-maximum-from-array) |
 | [2948-make-lexicographically-smallest-array-by-swapping-elements](https://github.com/AkshitMital/LeetCode/tree/master/2948-make-lexicographically-smallest-array-by-swapping-elements) |
 | [3568-minimum-moves-to-clean-the-classroom](https://github.com/AkshitMital/LeetCode/tree/master/3568-minimum-moves-to-clean-the-classroom) |
+| [3875-construct-uniform-parity-array-i](https://github.com/AkshitMital/LeetCode/tree/master/3875-construct-uniform-parity-array-i) |
 ## Union-Find
 |  |
 | ------- |
